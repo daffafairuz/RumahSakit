@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('units', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
+            $table->string('name');
+            $table->boolean('is_active')->default(true);
+            $table->foreignUlid('created_by_id')->nullable()->constrained('users')->nullOnDelete('set null');
+            $table->foreignUlid('updated_by_id')->nullable()->constrained('users')->nullOnDelete('set null');
             $table->timestamps();
         });
     }
